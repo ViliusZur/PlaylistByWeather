@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import Routes from '../routes';
 import './homepage.css';
+import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 export default class Homepage extends React.Component {
   render() {
@@ -9,6 +10,7 @@ export default class Homepage extends React.Component {
       <>
         this is Homepage
         <Link to='/playlist'><Button>Generate</Button></Link>
+        <Routes />
       </>
     );
   }
