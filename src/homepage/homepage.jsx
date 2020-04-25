@@ -1,8 +1,11 @@
-import React from 'react';
-import Routes from '../routes';
-import './homepage.css';
-import { Link } from 'react-router-dom';
-import { Button, Form, Alert } from 'react-bootstrap';
+import React from "react";
+import Routes from "../routes";
+import "./homepage.css";
+import { Link } from "react-router-dom";
+import { Button, Form, Row, Col, Alert } from "react-bootstrap";
+
+import Weather from '../components/weather/weather'
+import FindCoordinates from "../components/findCoordinates/findCoordinates";
 
 export default class Homepage extends React.Component {
 
@@ -11,7 +14,9 @@ export default class Homepage extends React.Component {
     this.state = {
         latitude: "",
         longitute: "",
+        city: "",
         weather: "",
+        locationButton: true,
         showSuccess: false,         //if we should be showing success message after adding user
         showError: false,           //if we should be showing error message
         errorCode: 400,
@@ -24,16 +29,19 @@ export default class Homepage extends React.Component {
     // get weather from users location using latitude and longitude
     console.log("searchWeather");
 
+    let lat = position.coords.latitude;
+    let lon = position.coords.longitude;
+
     this.setState({
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude
+      latitude: lat,
+      longitude: lon
     });
     // save in local storage for future use
-    localStorage.setItem("latitude", position.coords.latitude);
-    localStorage.setItem("longitude", position.coords.longitude);
+    localStorage.setItem("latitude", lat);
+    localStorage.setItem("longitude", lon);
 
     let apiKey = "a4874b69f2735af868ede8a96278c415"
-    let query = `api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}`
+    let query = `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`
     
     fetch(query, {
       method: 'GET',
@@ -44,24 +52,23 @@ export default class Homepage extends React.Component {
       .then(res => {
           if(res.ok) {
             res.json().then(json => {
-              console.log(json);
+              console.log(json.weather);
               this.setState({
-                weather: json.weather
+                weather: json.weather[0],
+                city: json.name,
+                locationButton: false
               });
-              
             });
           } else {
             console.log("error in fetching weather");
           }
       });
-  }
+    }
 
   findLocation = e => {
     // find location of user (latitude and longitude)
     e.preventDefault();
     console.log("findLocation");
-
-    var x = document.getElementById("location");
     
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.searchWeather);
@@ -69,24 +76,15 @@ export default class Homepage extends React.Component {
       return(<Alert message="Geolocation is not supported by this browser." type="error" />);
     }
   }
-/*
-  showPosition(position) {
-   
-    console.log("Latitude: ", position.coords.latitude);
-    console.log("<br>Longitude: ", position.coords.longitude);
-  }
-*/
+
   render() {
     return (
       <>
-        this is Homepage
+        <Weather city={this.state.city} weather={this.state.weather.main} description={this.state.weather.description} />
+        <FindCoordinates locationButton={this.state.locationButton} onClick={this.findLocation}/>
+        
 
-        <Button variant="primary" type="button" onClick={this.findLocation}>
-            Find my location
-        </Button>
-
-        <Link to="/playlist"><Button>Generate</Button></Link>
-        <Routes />
+        
       </>
     );
   }
