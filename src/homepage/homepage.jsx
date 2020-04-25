@@ -16,7 +16,7 @@ export default class Homepage extends React.Component {
         longitute: "",
         city: "",
         weather: "",
-        locationButton: true,
+        displayLocationButton: true,
         showSuccess: false,         //if we should be showing success message after adding user
         showError: false,           //if we should be showing error message
         errorCode: 400,
@@ -56,7 +56,7 @@ export default class Homepage extends React.Component {
               this.setState({
                 weather: json.weather[0],
                 city: json.name,
-                locationButton: false
+                displayLocationButton: false
               });
             });
           } else {
@@ -81,7 +81,7 @@ export default class Homepage extends React.Component {
     return (
       <>
         <Weather city={this.state.city} weather={this.state.weather.main} description={this.state.weather.description} />
-        <FindCoordinates locationButton={this.state.locationButton} onClick={this.findLocation}/>
+        <FindCoordinates display={this.state.displayLocationButton} onClick={this.findLocation}/>
         
 
         
