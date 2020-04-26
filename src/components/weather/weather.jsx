@@ -2,7 +2,7 @@ import React from "react";
 import YearForm from "../yearForm/yearForm";
 
 export default function Weather(props) {
-    const { city, weather, description } = props;
+    const { city, weather, description, onClick } = props;
     let localWeather = city + ", " + weather + ": " + description;
     
     if(weather === undefined || city === undefined || description === undefined){
@@ -12,7 +12,7 @@ export default function Weather(props) {
         return (
             <>
                 {localWeather}
-                <YearForm />
+                <YearForm onClick={onClick} />
             </>
         );
     }

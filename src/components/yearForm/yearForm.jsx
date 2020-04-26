@@ -1,7 +1,8 @@
 import React from "react";
 import { Button, Form, Row, Col } from 'react-bootstrap';
 
-export default function YearForm() {
+export default function YearForm(props) {
+    const { onClick } = props;
     return(
         <Form>
             <>Optional:</>
@@ -19,7 +20,7 @@ export default function YearForm() {
                 </Form.Group>
                 </Col>
             </Row>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" onClick={onClick}>
                 Generate playlist
             </Button>
         </Form>

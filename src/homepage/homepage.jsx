@@ -1,8 +1,6 @@
 import React from "react";
-import Routes from "../routes";
 import "./homepage.css";
-import { Link } from "react-router-dom";
-import { Button, Form, Row, Col, Alert } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 
 import Weather from '../components/weather/weather'
 import FindCoordinates from "../components/findCoordinates/findCoordinates";
@@ -60,6 +58,7 @@ export default class Homepage extends React.Component {
               });
             });
           } else {
+            console.log(query);
             console.log("error in fetching weather");
           }
       });
@@ -77,11 +76,25 @@ export default class Homepage extends React.Component {
     }
   }
 
+  sendWeatherData = e => {
+    // sends data to the back end
+    e.preventDefault();
+    console.log("sendWeatherData");
+  }
+
   render() {
     return (
       <>
-        <Weather city={this.state.city} weather={this.state.weather.main} description={this.state.weather.description} />
-        <FindCoordinates display={this.state.displayLocationButton} onClick={this.findLocation}/>
+        <Weather 
+          city={this.state.city} 
+          weather={this.state.weather.main} 
+          description={this.state.weather.description} 
+          onClick={this.sendWeatherData}
+        />
+        <FindCoordinates 
+          display={this.state.displayLocationButton} 
+          onClick={this.findLocation}
+        />
         
 
         
