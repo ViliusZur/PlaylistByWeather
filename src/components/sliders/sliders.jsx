@@ -12,6 +12,9 @@ export default function Weather(props) {
         return (
             <>
                 {localWeather}
+                <Button variant="primary" onClick={onClick}>
+                    Generate playlist
+                </Button>
             </>
         );
     }
