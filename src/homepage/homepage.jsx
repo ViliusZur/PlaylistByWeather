@@ -4,6 +4,7 @@ import { Alert } from "react-bootstrap";
 
 import Weather from '../components/weather/weather'
 import FindCoordinates from "../components/findCoordinates/findCoordinates";
+import Sliders from "../components/sliders/sliders";
 
 export default class Homepage extends React.Component {
 
@@ -15,6 +16,7 @@ export default class Homepage extends React.Component {
         city: "",
         weather: "",
         displayLocationButton: true,
+        displaySliders: false,
         showSuccess: false,         //if we should be showing success message after adding user
         showError: false,           //if we should be showing error message
         errorCode: 400,
@@ -54,7 +56,8 @@ export default class Homepage extends React.Component {
               this.setState({
                 weather: json.weather[0],
                 city: json.name,
-                displayLocationButton: false
+                displayLocationButton: false,
+                displaySliders: true
               });
             });
           } else {
@@ -85,15 +88,18 @@ export default class Homepage extends React.Component {
   render() {
     return (
       <>
+        <FindCoordinates 
+          display={this.state.displayLocationButton} 
+          onClick={this.findLocation}
+        />
         <Weather 
           city={this.state.city} 
           weather={this.state.weather.main} 
           description={this.state.weather.description} 
-          onClick={this.sendWeatherData}
         />
-        <FindCoordinates 
-          display={this.state.displayLocationButton} 
-          onClick={this.findLocation}
+        <Sliders 
+          show={this.state.displaySliders} 
+          onClick={this.sendWeatherData}
         />
         
 

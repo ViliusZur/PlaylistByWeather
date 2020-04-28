@@ -1,8 +1,7 @@
 import React from "react";
-import { Button } from 'react-bootstrap';
 
 export default function Weather(props) {
-    const { city, weather, description, onClick } = props;
+    const { city, weather, description } = props;
     let localWeather = city + ", " + weather + ": " + description;
     
     if(weather === undefined || city === undefined || description === undefined){
