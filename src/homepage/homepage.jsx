@@ -4,7 +4,7 @@ import { Alert } from "react-bootstrap";
 
 import Weather from '../components/weather/weather'
 import FindCoordinates from "../components/findCoordinates/findCoordinates";
-import Sliders from "../components/sliders/sliders";
+import Valence from "../components/valence/valence";
 
 export default class Homepage extends React.Component {
 
@@ -45,27 +45,30 @@ export default class Homepage extends React.Component {
     
     fetch(query, {
       method: 'GET',
-      headers: {
+      headers: 
+      {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-      }})
-      .then(res => {
-          if(res.ok) {
-            res.json().then(json => {
-              console.log(json.weather);
-              this.setState({
-                weather: json.weather[0],
-                city: json.name,
-                displayLocationButton: false,
-                displaySliders: true
-              });
+      }}).then(res => {
+        if(res.ok) {
+          res.json().then(json => {
+            console.log(json.weather);
+
+            this.setState({
+              weather: json.weather[0],
+              city: json.name,
+              displayLocationButton: false,
+              displaySliders: true
             });
-          } else {
-            console.log(query);
-            console.log("error in fetching weather");
-          }
-      });
-    }
+            
+          });
+        } else {
+          console.log(query);
+          console.log("error in fetching weather");
+        }
+      }
+    );
+  }
 
   findLocation = e => {
     // find location of user (latitude and longitude)
@@ -79,13 +82,42 @@ export default class Homepage extends React.Component {
     }
   }
 
-  sendWeatherData = e => {
+  sendDataToBackend = async (valence) => {
     // sends data to the back end
-    e.preventDefault();
-    console.log("sendWeatherData");
+    
+    valence = parseFloat(valence);
+    valence = valence / 100;
+
+    var data = {
+      "valence": valence,
+      "weatherID": this.state.weather.id
+    }
+    console.log(data);
+   
+    let query = "http://localhost:3300/main";
+    
+    fetch(query, {
+      method: "POST",
+      headers: 
+      {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+      }).then(res => {
+        if(res.ok) {
+          // do something here if the response is ok
+          console.log("response is ok");
+        } else {
+          console.log(query);
+          console.log("error in fetching weather");
+        }
+      }
+    );
   }
 
   render() {
+
     return (
       <>
         <FindCoordinates 
@@ -97,13 +129,10 @@ export default class Homepage extends React.Component {
           weather={this.state.weather.main} 
           description={this.state.weather.description} 
         />
-        <Sliders 
+        <Valence 
           show={this.state.displaySliders} 
-          onClick={this.sendWeatherData}
+          parentCallback={this.sendDataToBackend}
         />
-        
-
-        
       </>
     );
   }
