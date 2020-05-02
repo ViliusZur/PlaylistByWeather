@@ -4,7 +4,8 @@ import { Alert } from "react-bootstrap";
 
 import Weather from '../components/weather/weather'
 import FindCoordinates from "../components/findCoordinates/findCoordinates";
-import Valence from "../components/valence/valence";
+import SpotifyLogin from "../components/spotifyLogin/spotifyLogin";
+import Slider from "../components/slider/slider"
 
 export default class Homepage extends React.Component {
 
@@ -16,7 +17,9 @@ export default class Homepage extends React.Component {
         city: "",
         weather: "",
         displayLocationButton: true,
-        displaySliders: false,
+        displayLoginButton: false,
+        displayLoginForm: false,
+        displaySlider: false,
         showSuccess: false,         //if we should be showing success message after adding user
         showError: false,           //if we should be showing error message
         errorCode: 400,
@@ -58,7 +61,7 @@ export default class Homepage extends React.Component {
               weather: json.weather[0],
               city: json.name,
               displayLocationButton: false,
-              displaySliders: true
+              displayLoginButton: true
             });
             
           });
@@ -80,6 +83,28 @@ export default class Homepage extends React.Component {
     } else { 
       return(<Alert message="Geolocation is not supported by this browser." type="error" />);
     }
+  }
+
+  displayLoginForm = e => {
+    // sends to a Spotify login page
+
+    e.preventDefault();
+
+    console.log("login");
+    this.setState({
+      displayLoginButton: false,
+      displayLoginForm: true
+    });
+  }
+
+  sendSpotifyData = () => {
+    // sends data to spotify api
+
+    console.log("sending data");
+    this.setState({
+      displayLoginForm: false,
+      displaySlider: true
+    });
   }
 
   sendDataToBackend = async (valence) => {
@@ -129,8 +154,14 @@ export default class Homepage extends React.Component {
           weather={this.state.weather.main} 
           description={this.state.weather.description} 
         />
-        <Valence 
-          show={this.state.displaySliders} 
+        <SpotifyLogin 
+          displayLoginButton={this.state.displayLoginButton}
+          displayLoginForm={this.state.displayLoginForm}
+          sendToForm={this.displayLoginForm}
+          sendSpotifyData={this.sendSpotifyData}
+        />
+        <Slider
+          displaySlider={this.state.displaySlider}
           parentCallback={this.sendDataToBackend}
         />
       </>

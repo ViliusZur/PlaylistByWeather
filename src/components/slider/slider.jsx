@@ -5,9 +5,9 @@ import { Button } from "react-bootstrap";
 
 
 export default function Valence(props) {
-    const { show, parentCallback } = props;
+    const { displaySlider, parentCallback } = props;
     const [ value, setValue ] = useState(0);
-    if(show) {
+    if(displaySlider) {
         return (
             <div>
                 <div>
