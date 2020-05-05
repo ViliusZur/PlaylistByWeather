@@ -4,7 +4,6 @@ import { Alert } from "react-bootstrap";
 
 import Weather from '../components/weather/weather'
 import FindCoordinates from "../components/findCoordinates/findCoordinates";
-import SpotifyLogin from "../components/spotifyLogin/spotifyLogin";
 import Slider from "../components/slider/slider"
 
 export default class Homepage extends React.Component {
@@ -17,8 +16,6 @@ export default class Homepage extends React.Component {
         city: "",
         weather: "",
         displayLocationButton: true,
-        displayLoginButton: false,
-        displayLoginForm: false,
         displaySlider: false,
         showSuccess: false,         //if we should be showing success message after adding user
         showError: false,           //if we should be showing error message
@@ -61,7 +58,7 @@ export default class Homepage extends React.Component {
               weather: json.weather[0],
               city: json.name,
               displayLocationButton: false,
-              displayLoginButton: true
+              displaySlider: true
             });
             
           });
@@ -85,28 +82,6 @@ export default class Homepage extends React.Component {
     }
   }
 
-  displayLoginForm = e => {
-    // sends to a Spotify login page
-
-    e.preventDefault();
-
-    console.log("login");
-    this.setState({
-      displayLoginButton: false,
-      displayLoginForm: true
-    });
-  }
-
-  sendSpotifyData = () => {
-    // sends data to spotify api
-
-    console.log("sending data");
-    this.setState({
-      displayLoginForm: false,
-      displaySlider: true
-    });
-  }
-
   sendDataToBackend = async (valence) => {
     // sends data to the back end
     
@@ -119,7 +94,7 @@ export default class Homepage extends React.Component {
     }
     console.log(data);
    
-    let query = "http://localhost:3300/main";
+    let query = `http://localhost:3300/main`;
     
     fetch(query, {
       method: "POST",
@@ -153,12 +128,6 @@ export default class Homepage extends React.Component {
           city={this.state.city} 
           weather={this.state.weather.main} 
           description={this.state.weather.description} 
-        />
-        <SpotifyLogin 
-          displayLoginButton={this.state.displayLoginButton}
-          displayLoginForm={this.state.displayLoginForm}
-          sendToForm={this.displayLoginForm}
-          sendSpotifyData={this.sendSpotifyData}
         />
         <Slider
           displaySlider={this.state.displaySlider}
