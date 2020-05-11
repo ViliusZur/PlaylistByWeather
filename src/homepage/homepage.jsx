@@ -2,9 +2,12 @@ import React from "react";
 import "./homepage.css";
 import { Alert } from "react-bootstrap";
 
-import Weather from '../components/weather/weather'
-import FindCoordinates from "../components/findCoordinates/findCoordinates";
-import Slider from "../components/slider/slider"
+import Weather from "../components/weather/weather.jsx";
+import FindCoordinates from "../components/findCoordinates/findCoordinates.jsx";
+import Slider from "../components/slider/slider.jsx";
+import LoadingScreen from "../components/loadingScreen/loadingScreen.jsx";
+
+import Routes from '../routes.jsx';
 
 export default class Homepage extends React.Component {
 
@@ -17,6 +20,8 @@ export default class Homepage extends React.Component {
         weather: "",
         displayLocationButton: true,
         displaySlider: false,
+        displayLoadingScreen: false,
+        displayWeather: false,
         showSuccess: false,         //if we should be showing success message after adding user
         showError: false,           //if we should be showing error message
         errorCode: 400,
@@ -27,7 +32,6 @@ export default class Homepage extends React.Component {
 
   searchWeather = async (position) => {
     // get weather from users location using latitude and longitude
-    console.log("searchWeather");
 
     let lat = position.coords.latitude;
     let lon = position.coords.longitude;
@@ -40,31 +44,37 @@ export default class Homepage extends React.Component {
     localStorage.setItem("latitude", lat);
     localStorage.setItem("longitude", lon);
 
-    let apiKey = "a4874b69f2735af868ede8a96278c415"
-    let query = `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`
+    let query = `http://localhost:3300/weather/?lat=${lat}&lon=${lon}`;
     
     fetch(query, {
-      method: 'GET',
-      headers: 
-      {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-      }}).then(res => {
+      method: "GET",
+      headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+      }})
+      .then(res => {
         if(res.ok) {
-          res.json().then(json => {
-            console.log(json.weather);
-
-            this.setState({
-              weather: json.weather[0],
-              city: json.name,
-              displayLocationButton: false,
-              displaySlider: true
-            });
+            // do something here if the response is ok
+            console.log("OK: lat and lon sent.");
+            //console.log(res.body);
             
-          });
+            res.json().then(json => {
+              //console.log(json);
+
+              
+              this.setState({
+                weather: json.weather[0],
+                city: json.name,
+                displayLocationButton: false,
+                displayWeather: true,
+                displaySlider: true
+              });
+
+
+            });
         } else {
           console.log(query);
-          console.log("error in fetching weather");
+          console.log("ERROR: sending lat and lon.");
         }
       }
     );
@@ -73,7 +83,6 @@ export default class Homepage extends React.Component {
   findLocation = e => {
     // find location of user (latitude and longitude)
     e.preventDefault();
-    console.log("findLocation");
     
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.searchWeather);
@@ -94,7 +103,7 @@ export default class Homepage extends React.Component {
     }
     console.log(data);
    
-    let query = `http://localhost:3300/main`;
+    let query = `http://localhost:3300/main/`;
     
     fetch(query, {
       method: "POST",
@@ -106,14 +115,20 @@ export default class Homepage extends React.Component {
       body: JSON.stringify(data)
       }).then(res => {
         if(res.ok) {
-          // do something here if the response is ok
-          console.log("response is ok");
+            // do something here if the response is ok
+            console.log("response is ok");
         } else {
           console.log(query);
-          console.log("error in fetching weather");
+          console.log("error in fetching link");
         }
       }
     );
+    this.setState({
+      displayLoadingScreen: true,
+      displayLocationButton: false,
+      displayWeather: false,
+      displaySlider: false
+    });
   }
 
   render() {
@@ -121,10 +136,11 @@ export default class Homepage extends React.Component {
     return (
       <>
         <FindCoordinates 
-          display={this.state.displayLocationButton} 
+          displayLocationButton={this.state.displayLocationButton} 
           onClick={this.findLocation}
         />
         <Weather 
+          displayWeather={this.state.displayWeather}
           city={this.state.city} 
           weather={this.state.weather.main} 
           description={this.state.weather.description} 
@@ -133,6 +149,10 @@ export default class Homepage extends React.Component {
           displaySlider={this.state.displaySlider}
           parentCallback={this.sendDataToBackend}
         />
+        <LoadingScreen 
+          displayLoadingScreen={this.state.displayLoadingScreen}
+        />
+        <Routes />
       </>
     );
   }
