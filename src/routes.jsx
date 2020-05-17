@@ -2,12 +2,12 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 //import all routes
-import Close from "./components/close/close.jsx";
+import Loading from "./loadingScreen/loadingScreen.jsx";
 
 export default function Routes(){
     return(
-        <Switch>       
-            <Route path='/close' exact component={Close} />
+        <Switch>    
+            <Route path="/loading" exact component={Loading} />
         </Switch>
     );
 }

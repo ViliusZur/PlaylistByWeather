@@ -5,7 +5,6 @@ import { Alert } from "react-bootstrap";
 import Weather from "../components/weather/weather.jsx";
 import FindCoordinates from "../components/findCoordinates/findCoordinates.jsx";
 import Slider from "../components/slider/slider.jsx";
-import LoadingScreen from "../components/loadingScreen/loadingScreen.jsx";
 
 import Routes from '../routes.jsx';
 
@@ -20,7 +19,6 @@ export default class Homepage extends React.Component {
         weather: "",
         displayLocationButton: true,
         displaySlider: false,
-        displayLoadingScreen: false,
         displayWeather: false,
         showSuccess: false,         //if we should be showing success message after adding user
         showError: false,           //if we should be showing error message
@@ -122,13 +120,13 @@ export default class Homepage extends React.Component {
           console.log("error in fetching link");
         }
       }
-    );
+    );/*
     this.setState({
       displayLoadingScreen: true,
       displayLocationButton: false,
       displayWeather: false,
       displaySlider: false
-    });
+    });*/
   }
 
   render() {
@@ -148,9 +146,6 @@ export default class Homepage extends React.Component {
         <Slider
           displaySlider={this.state.displaySlider}
           parentCallback={this.sendDataToBackend}
-        />
-        <LoadingScreen 
-          displayLoadingScreen={this.state.displayLoadingScreen}
         />
         <Routes />
       </>
