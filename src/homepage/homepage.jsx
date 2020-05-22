@@ -1,7 +1,8 @@
 import React from "react";
+import "./homepage.css";
 
 import Slider from "../components/slider/slider.jsx";
-import Routes from '../routes.jsx';
+import Routes from "../routes.jsx";
 
 export default class Homepage extends React.Component {
 

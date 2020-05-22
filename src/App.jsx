@@ -4,7 +4,7 @@ import Homepage from "./homepage/homepage.jsx";
 import LoadingScreen from "./loadingScreen/loadingScreen.jsx";
 
 function App(props) {
-
+  
   if(window.location.href.indexOf("loading") > -1) {
     return ( <LoadingScreen /> );
   } else{
