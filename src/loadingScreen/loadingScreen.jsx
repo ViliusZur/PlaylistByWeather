@@ -23,7 +23,7 @@ export default class LoadingScreen extends React.Component {
         });
       } else {
         // the page is not reloaded
-        let query = `http://localhost:3300/Spotify/createPlaylist`;
+        let query = `https://infinite-dusk-31166.herokuapp.com/Spotify/createPlaylist`;
         
         fetch(query, {
           method: "GET",
