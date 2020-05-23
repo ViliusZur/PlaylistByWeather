@@ -42,8 +42,9 @@ export default class Homepage extends React.Component {
         if(res.ok) {
             // do something here if the response is ok
             console.log("response is ok");
-            res.json().then(json => {
-              console.log(json);
+            res.text().then(text => {
+              console.log(text);
+              window.open(text, "_blank");
             });
         } else {
           console.log(query);
