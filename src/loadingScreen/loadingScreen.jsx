@@ -46,7 +46,7 @@ export default class LoadingScreen extends React.Component {
                 window.open("", "_self");
                 window.close();
             } else {
-
+              console.log("timeout");
               setTimeout(() => {
                 this.setState({
                   displayLoadingAnimation: false
@@ -56,7 +56,7 @@ export default class LoadingScreen extends React.Component {
                 window.opener = null;
                 window.open("", "_self");
                 window.close();
-              }, 15000);
+              }, 30000);
             }
           }
         );
