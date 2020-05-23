@@ -46,8 +46,17 @@ export default class LoadingScreen extends React.Component {
                 window.open("", "_self");
                 window.close();
             } else {
-              console.log(query);
-              console.log("error in fetching link");
+
+              setTimeout(() => {
+                this.setState({
+                  displayLoadingAnimation: false
+                });
+
+                // close the tab
+                window.opener = null;
+                window.open("", "_self");
+                window.close();
+              }, 15000);
             }
           }
         );
