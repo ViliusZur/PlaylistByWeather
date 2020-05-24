@@ -26,7 +26,7 @@ export default function Valence(props) {
                 />
             </div>
             <div class="button-div">
-                <a onClick={() => {parentCallback(value)}}>
+                <a style="cursor: pointer;" onClick={() => {parentCallback(value)}}>
                     <button class="button" variant="primary" type="button">
                         Generate a playlist
                     </button>
