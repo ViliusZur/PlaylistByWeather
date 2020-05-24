@@ -29,7 +29,7 @@ export default class Homepage extends React.Component {
     console.log(data);
    
     let query = `https://infinite-dusk-31166.herokuapp.com/main/`;
-    
+  
     fetch(query, {
       method: "POST",
       headers: 
