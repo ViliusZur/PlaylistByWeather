@@ -54,7 +54,7 @@ export default class LoadingScreen extends React.Component {
 
   componentDidMount(){
     this.createPlaylist();
-    // The request will always timeout, but the playlist is always created 30s after
+    // The request will always timeout, but the playlist is always created, so close the window after 90s
     console.log("timeout");
 
     setTimeout(
@@ -68,8 +68,8 @@ export default class LoadingScreen extends React.Component {
         window.opener = null;
         window.open("", "_self");
         window.close();
-        
-      }.bind(this), 30000);
+
+      }.bind(this), 90000);
   }
 
   render() {
