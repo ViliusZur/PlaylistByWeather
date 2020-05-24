@@ -19,7 +19,6 @@ export default class Homepage extends React.Component {
 
   sendDataToBackend = async (valence) => {
     // sends data to the back end
-    e.preventDefault();
     
     valence = parseFloat(valence);
     valence = valence / 100;
