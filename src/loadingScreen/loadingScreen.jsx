@@ -29,7 +29,7 @@ export default class LoadingScreen extends React.Component {
         window.open("", "_self");
         window.close();
 
-      }.bind(this), 90000);
+      }.bind(this), 80000);
 
     if (window.performance) {
       if (performance.navigation.type === 1 || performance.navigation.type === 2) {
