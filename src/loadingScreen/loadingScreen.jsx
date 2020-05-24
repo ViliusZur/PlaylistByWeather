@@ -15,6 +15,22 @@ export default class LoadingScreen extends React.Component {
   createPlaylist = async () => {
     // send a fetch request to back end to create a new playlist
 
+    // The request will always timeout, but the playlist is always created, so close the window after 90s
+    console.log("setTimeout started");
+    setTimeout(
+      function() {
+        console.log("bye");
+        this.setState({
+          displayLoadingAnimation: false
+        });
+
+        // close the tab
+        window.opener = null;
+        window.open("", "_self");
+        window.close();
+
+      }.bind(this), 90000);
+
     if (window.performance) {
       if (performance.navigation.type === 1 || performance.navigation.type === 2) {
         // the page is reloaded or accessed via back/forward
@@ -25,7 +41,8 @@ export default class LoadingScreen extends React.Component {
         // the page is not reloaded
         let query = `https://infinite-dusk-31166.herokuapp.com/Spotify/createPlaylist`;
       
-        fetch(query, {
+        try{
+          fetch(query, {
           method: "GET",
           headers: 
           {
@@ -47,29 +64,14 @@ export default class LoadingScreen extends React.Component {
                 window.close();
             }
           }
-        );
+          );
+        } catch(e) {}
       }
     }
   }
 
   componentDidMount(){
     this.createPlaylist();
-    // The request will always timeout, but the playlist is always created, so close the window after 90s
-    console.log("timeout");
-
-    setTimeout(
-      function() {
-
-        this.setState({
-          displayLoadingAnimation: false
-        });
-
-        // close the tab
-        window.opener = null;
-        window.open("", "_self");
-        window.close();
-
-      }.bind(this), 90000);
   }
 
   render() {
