@@ -24,10 +24,8 @@ export default class LoadingScreen extends React.Component {
           displayLoadingAnimation: false
         });
 
-        // close the tab
-        window.opener = null;
-        window.open("", "_self");
-        window.close();
+        // return to homepage
+        props.history.push("https://moodyface.heroku.com");
 
       }.bind(this), 80000);
 
@@ -58,10 +56,8 @@ export default class LoadingScreen extends React.Component {
                   displayLoadingAnimation: false
                 });
 
-                // close the tab
-                window.opener = null;
-                window.open("", "_self");
-                window.close();
+                // return to homepage
+                props.history.push("https://moodyface.heroku.com");
             }
           }
           );
