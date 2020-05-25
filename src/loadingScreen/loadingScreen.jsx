@@ -60,7 +60,7 @@ export default class LoadingScreen extends React.Component {
                 });
 
                 // return to homepage
-                window.location.href = "https://moodyface.heroku.com";
+                window.location.href = "https://moodyface.herokuapp.com";
             }
           }
           );
