@@ -43,7 +43,7 @@ export default class Homepage extends React.Component {
             // do something here if the response is ok
             console.log("response is ok");
             res.text().then(text => {
-              props.history.push(text);
+              window.location.href = text;
               //window.open(text, "_blank");
             });
         } else {

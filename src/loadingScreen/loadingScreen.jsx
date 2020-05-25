@@ -25,7 +25,10 @@ export default class LoadingScreen extends React.Component {
         });
 
         // return to homepage
-        this.props.history.push("https://moodyface.heroku.com");
+        window.location.href = "https://moodyface.heroku.com";
+        /*window.opener = null;
+        window.open("", "_self");
+        window.close();*/
 
       }.bind(this), 80000);
 
@@ -57,7 +60,7 @@ export default class LoadingScreen extends React.Component {
                 });
 
                 // return to homepage
-                props.history.push("https://moodyface.heroku.com");
+                window.location.href = "https://moodyface.heroku.com";
             }
           }
           );
