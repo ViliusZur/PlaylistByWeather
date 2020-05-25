@@ -46,7 +46,7 @@ export default class LoadingScreen extends React.Component {
               "Accept": "application/json",
               "Content-Type": "application/json"
           }
-          }).then(res => {
+          }).then(async res => {
             if(res.ok) {
                 // do something here if the response is ok
                 console.log("response is ok");
