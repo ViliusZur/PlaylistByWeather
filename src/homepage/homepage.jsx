@@ -19,7 +19,7 @@ export default class Homepage extends React.Component {
 
   sendDataToBackend = async (valence) => {
     // sends data to the back end
-    
+    alert("poop");
     valence = parseFloat(valence);
     valence = valence / 100;
 
@@ -43,7 +43,8 @@ export default class Homepage extends React.Component {
             // do something here if the response is ok
             console.log("response is ok");
             res.text().then(text => {
-              window.open(text, "_blank");
+              this.props.history.push(text);
+              //window.open(text, "_blank");
             });
         } else {
           console.log(query);
