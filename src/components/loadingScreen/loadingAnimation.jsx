@@ -37,7 +37,7 @@ export default function LoadingAnimation(props) {
         return (
             <>
                 <div class="text-close">
-                    Playlist created. You can close this window.
+                    Playlist created. Check your Spotify.
                 </div>
             </>
         );

@@ -26,10 +26,6 @@ export default class LoadingScreen extends React.Component {
 
         // return to homepage
         window.location.href = "https://moodyface.herokuapp.com";
-        /*window.opener = null;
-        window.open("", "_self");
-        window.close();*/
-
       }.bind(this), 80000);
 
     if (window.performance) {
@@ -58,6 +54,12 @@ export default class LoadingScreen extends React.Component {
                 this.setState({
                   displayLoadingAnimation: false
                 });
+
+                setTimeout(
+                  function() {
+                    // return to homepage
+                    window.location.href = "https://moodyface.herokuapp.com";
+                  }.bind(this), 5000);
 
                 // return to homepage
                 window.location.href = "https://moodyface.herokuapp.com";
