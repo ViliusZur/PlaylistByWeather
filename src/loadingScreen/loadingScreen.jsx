@@ -59,7 +59,7 @@ export default class LoadingScreen extends React.Component {
                   function() {
                     // return to homepage
                     window.location.href = "https://moodyface.herokuapp.com";
-                  }.bind(this), 5000);
+                  }.bind(this), 10000);
 
                 // return to homepage
                 window.location.href = "https://moodyface.herokuapp.com";
