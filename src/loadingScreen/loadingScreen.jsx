@@ -55,7 +55,7 @@ export default class LoadingScreen extends React.Component {
                   displayLoadingAnimation: false
                 });
 
-                setTimeout(
+                await setTimeout(
                   function() {
                     // return to homepage
                     window.location.href = "https://moodyface.herokuapp.com";
