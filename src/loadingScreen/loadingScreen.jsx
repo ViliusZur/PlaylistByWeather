@@ -25,7 +25,7 @@ export default class LoadingScreen extends React.Component {
         });
 
         // return to homepage
-        props.history.push("https://moodyface.heroku.com");
+        this.props.history.push("https://moodyface.heroku.com");
 
       }.bind(this), 80000);
 
