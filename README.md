@@ -9,5 +9,7 @@ This website creates a Spotify playlist based on your chosen mood.
 ## Install
 
 To install the front end, run:
+
 `npm install`
-`npm start`
+
+`npm run-script dev`
