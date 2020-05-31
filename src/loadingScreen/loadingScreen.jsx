@@ -12,7 +12,7 @@ export default class LoadingScreen extends React.Component {
     };
   };
 
-  createPlaylist = async () => {
+  createPlaylist = async (accessToken, refreshToken) => {
     // send a fetch request to back end to create a new playlist
 
     // The request will always timeout, but the playlist is always created, so close the window after 90s
@@ -36,10 +36,14 @@ export default class LoadingScreen extends React.Component {
         });
       } else {
         // the page is not reloaded
-        let query = `https://infinite-dusk-31166.herokuapp.com/Spotify/createPlaylist`;
+
+        console.log("Access token: ", accessToken);
+        console.log("Refresh token: ", refreshToken);
+
+        let url = `https://infinite-dusk-31166.herokuapp.com/Spotify/createPlaylist?accessToken=${accessToken}&refreshToken=${refreshToken}`;
       
         try{
-          fetch(query, {
+          fetch(url, {
           method: "GET",
           headers: 
           {
@@ -69,7 +73,20 @@ export default class LoadingScreen extends React.Component {
   }
 
   componentDidMount(){
-    this.createPlaylist();
+    const hash = window.location.hash
+    .substring(1)
+    .split('&')
+    .reduce(function (initial, item) {
+      if (item) {
+        var parts = item.split('=');
+        initial[parts[0]] = decodeURIComponent(parts[1]);
+      }
+      return initial;
+    }, {});
+    window.location.hash = "";
+    console.log(hash);
+
+    this.createPlaylist(hash["AT"], hash["RT"]);
   }
 
   render() {
